@@ -6,7 +6,7 @@
         <artifactId>yope-careers-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>yope-careers-db-lucene</artifactId>
+    <artifactId>yope-careers-db-elasticsearch</artifactId>
 
     <dependencies>
         <dependency>

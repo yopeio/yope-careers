@@ -17,7 +17,7 @@
         <module>yope-careers-domain</module>
         <module>yope-careers-service</module>
         <module>yope-careers-db</module>
-        <module>yope-careers-db-lucene</module>
+        <module>yope-careers-db-elasticsearch</module>
     </modules>
 
     <dependencyManagement>
