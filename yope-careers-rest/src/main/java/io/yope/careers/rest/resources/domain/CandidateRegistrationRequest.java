@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package io.yope.careers.rest.resources.domain;
 

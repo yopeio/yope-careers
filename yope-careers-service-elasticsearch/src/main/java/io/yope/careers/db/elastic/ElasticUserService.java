@@ -36,7 +36,7 @@ public class ElasticUserService implements UserService {
     public User register(final User candidate) {
         final EUser elasticCandidate = EUser.builder()
                 .hash(candidate.getHash())
-                .created(candidate.getCreated())
+                .created(DateTime.now().getMillis())
                 .profile(candidate.getProfile())
                 .profile(candidate.getProfile())
                 .password(candidate.getPassword())

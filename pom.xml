@@ -14,7 +14,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>yope-careers-rest</module>
-        <module>yope-careers-domain</module>
         <module>yope-careers-service</module>
         <module>yope-careers-service-elasticsearch</module>
     </modules>
@@ -23,12 +22,12 @@
         <dependencies>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>yope-careers-domain</artifactId>
+                <artifactId>yope-careers-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>yope-careers-service</artifactId>
+                <artifactId>yope-careers-service-elasticsearch</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
