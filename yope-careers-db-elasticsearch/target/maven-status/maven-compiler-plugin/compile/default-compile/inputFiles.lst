@@ -1,3 +1,12 @@
-/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-lucene/src/main/java/io/yope/careers/db/lucene/LuceneTitleService.java
-/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-lucene/src/main/java/io/yope/careers/db/lucene/LuceneAuthorityService.java
-/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-lucene/src/main/java/io/yope/careers/db/lucene/LuceneCandidateService.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/elastic/ElasticCandidateService.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/elastic/repositories/CandidateRepository.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/domain/Authority.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/domain/PublicKey.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/domain/Verification.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/elastic/ElasticConfiguration.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/domain/Title.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/elastic/ElasticAuthorityService.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/elastic/ElasticTitleService.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/domain/Page.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/domain/ElasticCandidate.java
+/Users/mgerardi/projects/yope-careers-parent/yope-careers-db-elasticsearch/src/main/java/io/yope/careers/db/domain/Profile.java

@@ -3,9 +3,14 @@
  */
 package io.yope.careers.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * @author Massimiliano Gerardi
@@ -13,17 +18,22 @@ import lombok.Getter;
  */
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@JsonInclude(Include.NON_NULL)
+@ToString(of = {"name", "description"}, includeFieldNames = false)
 public class Title {
 
-    private final String id;
+    private String hash;
 
-    private final Long created;
+    private Long created;
 
-    private final String name;
+    private String name;
 
-    private final String description;
+    private String description;
 
-    private final Long issued;
+    private Long issued;
+
+    private Profile profile;
 
 }

@@ -24,8 +24,6 @@ public class Verification {
 
     private final String verificationCode;
 
-    private final String verificationHash;
-
     private final String hash;
 
 }
