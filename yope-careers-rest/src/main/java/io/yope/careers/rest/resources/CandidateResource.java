@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.yope.careers.db.QueryCriteria;
-import io.yope.careers.domain.User;
 import io.yope.careers.domain.Title;
+import io.yope.careers.domain.User;
 import io.yope.careers.rest.resources.domain.CandidateRegistrationRequest;
 import io.yope.careers.rest.resources.domain.Response;
+import io.yope.careers.service.QueryCriteria;
 
 /**
  * @author Massimiliano Gerardi

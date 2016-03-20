@@ -10,7 +10,7 @@
   <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>yope-careers-db</artifactId>
+            <artifactId>yope-careers-domain</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

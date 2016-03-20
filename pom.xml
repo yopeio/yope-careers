@@ -16,8 +16,7 @@
         <module>yope-careers-rest</module>
         <module>yope-careers-domain</module>
         <module>yope-careers-service</module>
-        <module>yope-careers-db</module>
-        <module>yope-careers-db-elasticsearch</module>
+        <module>yope-careers-service-elasticsearch</module>
     </modules>
 
     <dependencyManagement>
@@ -25,11 +24,6 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>yope-careers-domain</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>yope-careers-db</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
