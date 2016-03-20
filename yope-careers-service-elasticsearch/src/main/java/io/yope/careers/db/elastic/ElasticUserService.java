@@ -18,6 +18,9 @@ import io.yope.careers.domain.User;
 import io.yope.careers.domain.User.Status;
 import io.yope.careers.service.QueryCriteria;
 import io.yope.careers.service.UserService;
+import io.yope.careers.service.exceptions.IllegalTitleStatusException;
+import io.yope.careers.service.exceptions.TitleNotFoundException;
+import io.yope.careers.service.exceptions.UserNotFoundException;
 /**
  *
  * @author Massimiliano Gerardi
@@ -61,17 +64,17 @@ public class ElasticUserService implements UserService {
     public User get(final String id) {
         final EUser currentCandidate = this.repository.findOne(id);
         if (currentCandidate == null) {
-            throw new IllegalArgumentException(id);
+            return null;
         }
         return currentCandidate.toCandidate();
     }
 
 
     @Override
-    public User modify(final String id, final User candidate) {
+    public User modify(final String id, final User candidate) throws UserNotFoundException {
         final EUser currentCandidate = this.repository.findOne(id);
         if (currentCandidate == null) {
-            throw new IllegalArgumentException(id);
+            throw new UserNotFoundException(id);
         }
         final EUser elasticCandidate = currentCandidate
                 .withModified(DateTime.now().getMillis())
@@ -82,29 +85,29 @@ public class ElasticUserService implements UserService {
     }
 
     @Override
-    public User delete(final String id) {
+    public User delete(final String id) throws UserNotFoundException {
         final EUser currentCandidate = this.repository.findOne(id);
         if (currentCandidate == null) {
-            throw new IllegalArgumentException(id);
+            throw new UserNotFoundException(id);
         }
         final EUser elasticCandidate = currentCandidate.withStatus(Status.INACTIVE);
         return this.save(elasticCandidate);
     }
 
     @Override
-    public Page<Title> getTitles(final String id) {
+    public Page<Title> getTitles(final String id) throws UserNotFoundException {
         final User currentCandidate = this.get(id);
         if (currentCandidate == null) {
-            throw new IllegalArgumentException(id);
+            throw new UserNotFoundException(id);
         }
         return new Page<Title>(currentCandidate.getTitles(), new Long(currentCandidate.getTitles().size()), 1, 0, Boolean.TRUE);
     }
 
     @Override
-    public Title registerTitle(final String id, final Title title) {
+    public Title registerTitle(final String id, final Title title) throws UserNotFoundException {
         final EUser currentCandidate = this.repository.findOne(id);
         if (currentCandidate == null) {
-            throw new IllegalArgumentException(id);
+            throw new UserNotFoundException(id);
         }
         List<ETitle> titles = currentCandidate.getTitles();
         if (titles == null) {
@@ -128,22 +131,22 @@ public class ElasticUserService implements UserService {
     }
 
     @Override
-    public Title confirmTitleVerification(final String titleId) {
+    public Title confirmTitleVerification(final String titleId) throws IllegalTitleStatusException, TitleNotFoundException {
         return this.changeTitleStatus(titleId, Title.Status.VERIFIED);
 
     }
 
     @Override
-    public Title revokeTitleVerification(final String titleId) {
+    public Title revokeTitleVerification(final String titleId) throws IllegalTitleStatusException, TitleNotFoundException {
         return this.changeTitleStatus(titleId, Title.Status.UNVERIFIED);
     }
 
-    private Title changeTitleStatus(final String titleId, final Title.Status status) {
+    private Title changeTitleStatus(final String titleId, final Title.Status status) throws IllegalTitleStatusException, TitleNotFoundException {
         final EUser currentCandidate = this.getUserForTitle(Title.builder().hash(titleId).build());
         final List<ETitle> titles = currentCandidate.getTitles();
         final ETitle currentTitle = titles.stream().filter(x -> x.getHash().equals(titleId)).findFirst().orElse(null);
         if (currentTitle.getStatus().equals(status)) {
-            throw new IllegalArgumentException(MessageFormat.format("Title {0} has already status {1}", titleId, status)) ;
+            throw new IllegalTitleStatusException(MessageFormat.format("Title {0} has already status {1}", titleId, status)) ;
         }
         titles.remove(currentTitle);
         final ETitle modifiedTitle = currentTitle.withStatus(status);
@@ -156,7 +159,7 @@ public class ElasticUserService implements UserService {
     }
 
     @Override
-    public Title unregisterTitle(final String titleId) {
+    public Title unregisterTitle(final String titleId) throws TitleNotFoundException {
         final EUser currentCandidate = this.getUserForTitle(Title.builder().hash(titleId).build());
         final List<ETitle> titles = currentCandidate.getTitles();
         final ETitle title = titles.stream().filter(x -> x.getHash().equals(titleId)).findFirst().orElse(null);
@@ -168,23 +171,23 @@ public class ElasticUserService implements UserService {
         return title.toTitle();
     }
 
-    private EUser getUserForTitle(final Title title) {
+    private EUser getUserForTitle(final Title title) throws TitleNotFoundException {
         final User searchCandidate = User.builder().titles(Lists.newArrayList(title)).build();
         final Page<User> users = this.search(QueryCriteria.builder().candidate(searchCandidate).page(0).size(1).build());
         final User candidate = users.getElements().stream().findFirst().orElse(null);
         if (candidate == null) {
-            throw new IllegalArgumentException(MessageFormat.format("No results for query on '{0}'", title));
+            throw new TitleNotFoundException(MessageFormat.format("No results for query on '{0}'", title));
         }
         return this.repository.findOne(candidate.getHash());
     }
 
     @Override
-    public Title getTitle(final String titleId) {
+    public Title getTitle(final String titleId) throws TitleNotFoundException {
         final User candidate = User.builder().titles(Lists.newArrayList(Title.builder().hash(titleId).build())).build();
         final Page<User> users = this.search(QueryCriteria.builder().candidate(candidate).page(0).size(1).build());
         final User currentCandidate = users.getElements().stream().findFirst().orElse(null);
         if (currentCandidate == null) {
-            throw new IllegalArgumentException(titleId);
+            throw new TitleNotFoundException(MessageFormat.format("No results for query on '{0}'", titleId));
         }
         final List<Title> titles = currentCandidate.getTitles();
         return titles.stream().filter(x -> x.getHash().equals(titleId)).findFirst().orElse(null);

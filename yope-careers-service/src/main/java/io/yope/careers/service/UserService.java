@@ -3,6 +3,9 @@ package io.yope.careers.service;
 import io.yope.careers.domain.Page;
 import io.yope.careers.domain.Title;
 import io.yope.careers.domain.User;
+import io.yope.careers.service.exceptions.IllegalTitleStatusException;
+import io.yope.careers.service.exceptions.TitleNotFoundException;
+import io.yope.careers.service.exceptions.UserNotFoundException;
 
 /**
  *
@@ -15,22 +18,22 @@ public interface UserService {
 
     Page<User> search(QueryCriteria query);
 
-    User get(String id);
+    User get(String id) ;
 
-    User modify(String id, User user);
+    User modify(String id, User user) throws UserNotFoundException;
 
-    User delete(String id);
+    User delete(String id) throws UserNotFoundException;
 
-    Page<Title> getTitles(String id);
+    Page<Title> getTitles(String id) throws UserNotFoundException;
 
-    Title registerTitle(String id, Title title);
+    Title registerTitle(String id, Title title) throws UserNotFoundException;
 
-    Title unregisterTitle(String titleId);
+    Title unregisterTitle(String titleId) throws TitleNotFoundException, IllegalTitleStatusException;
 
-    Title confirmTitleVerification(final String titleId);
+    Title confirmTitleVerification(final String titleId) throws TitleNotFoundException, IllegalTitleStatusException;
 
-    Title revokeTitleVerification(final String titleId);
+    Title revokeTitleVerification(final String titleId) throws TitleNotFoundException, IllegalTitleStatusException;
 
-    Title getTitle(String titleId);
+    Title getTitle(String titleId) throws TitleNotFoundException;
 
 }

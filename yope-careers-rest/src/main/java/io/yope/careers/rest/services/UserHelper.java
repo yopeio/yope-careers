@@ -10,6 +10,7 @@ import io.yope.careers.domain.Title;
 import io.yope.careers.domain.User;
 import io.yope.careers.service.QueryCriteria;
 import io.yope.careers.service.UserService;
+import io.yope.careers.service.exceptions.UserNotFoundException;
 
 /**
  * @author Massimiliano Gerardi
@@ -37,15 +38,15 @@ public class UserHelper {
         return this.userService.get(id);
     }
 
-    public User modify(final String id, final User candidate) {
+    public User modify(final String id, final User candidate) throws UserNotFoundException {
         return this.userService.modify(id, candidate);
     }
 
-    public User delete(final String id) {
+    public User delete(final String id) throws UserNotFoundException {
         return this.userService.delete(id);
     }
 
-    public Page<Title> getTitle(final String id) {
+    public Page<Title> getTitle(final String id) throws UserNotFoundException {
         return this.userService.getTitles(id);
     }
 
