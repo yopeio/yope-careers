@@ -23,6 +23,10 @@ public interface UserService {
 
     Title unregisterTitle(String titleId);
 
+    Title confirmTitleVerification(final String titleId);
+
+    Title revokeTitleVerification(final String titleId);
+
     Title getTitle(String titleId);
 
     User delete(String id);

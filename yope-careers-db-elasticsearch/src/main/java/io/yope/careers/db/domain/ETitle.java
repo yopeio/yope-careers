@@ -8,6 +8,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import io.yope.careers.domain.Profile;
 import io.yope.careers.domain.Title;
+import io.yope.careers.domain.Title.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,6 +39,8 @@ public class ETitle {
     @Field(type = FieldType.Nested)
     private Profile profile;
 
+    private Status status;
+
     public Title toTitle() {
         return Title.builder()
                 .created(this.created)
@@ -46,6 +49,7 @@ public class ETitle {
                 .issued(this.issued)
                 .name(this.name)
                 .profile(this.profile)
+                .status(this.status)
                 .build();
     }
 

@@ -21,8 +21,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @JsonInclude(Include.NON_NULL)
-@ToString(of = {"name", "description"}, includeFieldNames = false)
+@ToString(of = {"hash", "name", "description"}, includeFieldNames = false)
 public class Title {
+
+    public enum Status {
+        VERIFIED, UNVERIFIED;
+    }
 
     private String hash;
 
@@ -33,6 +37,8 @@ public class Title {
     private String description;
 
     private Long issued;
+
+    private Status status;
 
     private Profile profile;
 

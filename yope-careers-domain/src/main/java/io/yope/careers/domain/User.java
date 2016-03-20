@@ -34,7 +34,7 @@ public class User {
     }
 
     public enum Status {
-        ACTIVE, INACTIVE, PENDING;
+        ACTIVE, INACTIVE, PENDING, UNKNOWN;
     }
 
     private Long created;

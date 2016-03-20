@@ -365,12 +365,49 @@ public class ElasticUserServiceTest {
     @Test
     public void testSearchByTitleDescription() {
        Assert.assertNotNull(this.service);
-       final User candidate = User.builder().titles(Lists.newArrayList(Title.builder().description("title").build())).build();
+       final User candidate = User.builder().titles(Lists.newArrayList(Title.builder().description("university").build())).build();
        final Page<User> page = this.service.search(QueryCriteria.builder().page(0).size(10).candidate(candidate).build());
        Assert.assertNotNull(page);
        Assert.assertEquals(0, page.getFrom().intValue());
        Assert.assertEquals(10, page.getPages().intValue());
-       Assert.assertEquals(96, page.getTotal().intValue());
+       Assert.assertEquals(95, page.getTotal().intValue());
+       Assert.assertEquals(10, page.getElements().size());
+       Assert.assertFalse(page.getLast());
+    }
+
+    /**
+     * Test method for {@link io.yope.careers.db.elastic.ElasticUserService#search(io.yope.careers.db.QueryCriteria)}.
+     */
+    @Test
+    public void testSearchByTitleStatusUnverified() {
+       Assert.assertNotNull(this.service);
+       final User candidate = User.builder()
+               .titles(Lists.newArrayList(
+                       Title.builder().description("university").status(Title.Status.UNVERIFIED).build()))
+               .build();
+       final Page<User> page = this.service.search(QueryCriteria.builder().page(0).size(10).candidate(candidate).build());
+       Assert.assertNotNull(page);
+       Assert.assertEquals(0, page.getFrom().intValue());
+       Assert.assertEquals(1, page.getPages().intValue());
+       Assert.assertEquals(4, page.getTotal().intValue());
+       Assert.assertEquals(4, page.getElements().size());
+       Assert.assertTrue(page.getLast());
+    }
+
+    /**
+     * Test method for {@link io.yope.careers.db.elastic.ElasticUserService#search(io.yope.careers.db.QueryCriteria)}.
+     */
+    @Test
+    public void testSearchByTitleStatusVerified() {
+       Assert.assertNotNull(this.service);
+       final User candidate = User.builder().status(Status.UNKNOWN)
+               .titles(Lists.newArrayList(
+                       Title.builder().description("university").status(Title.Status.VERIFIED).build())).build();
+       final Page<User> page = this.service.search(QueryCriteria.builder().page(0).size(10).candidate(candidate).build());
+       Assert.assertNotNull(page);
+       Assert.assertEquals(0, page.getFrom().intValue());
+       Assert.assertEquals(10, page.getPages().intValue());
+       Assert.assertEquals(95, page.getTotal().intValue());
        Assert.assertEquals(10, page.getElements().size());
        Assert.assertFalse(page.getLast());
     }
@@ -436,6 +473,37 @@ public class ElasticUserServiceTest {
         Assert.assertEquals(96, candidates.size());
     }
 
+    @Test
+    public void testConfirmTitleVerification() {
+        final String titleId = "84238316-c9dd-470b-9034-3a8f280e4b07";
+        Title title = this.service.confirmTitleVerification(titleId);
+        Assert.assertNotNull(title);
+
+        title = this.service.getTitle(titleId);
+        Assert.assertEquals(Title.Status.VERIFIED, title.getStatus());
+    }
+
+    @Test(expected = Exception.class)
+    public void testConfirmTitleVerificationError() {
+        final String titleId = "bf47c9ca-ebd0-4ldf-b58d-ffb8399b2829";
+        this.service.confirmTitleVerification(titleId);
+    }
+
+    @Test(expected = Exception.class)
+    public void testRevokeTitleVerificationError() {
+        final String titleId = "84238316-c9dd-470b-9034-3a8f280e4b07";
+        this.service.revokeTitleVerification(titleId);
+    }
+
+    @Test
+    public void testRevokeTitleVerification() {
+        final String titleId = "bf47c9ca-ebd0-4ldf-b58d-ffb8399b2829";
+        Title title = this.service.revokeTitleVerification(titleId);
+        Assert.assertNotNull(title);
+
+        title = this.service.getTitle(titleId);
+        Assert.assertEquals(Title.Status.UNVERIFIED, title.getStatus());
+    }
     @Test
     public void testAddRemoveTitle() {
         final String id = "fa6d7dc3-14c0-46db-b7ba-e15392d4cb21";

@@ -7,8 +7,9 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.elasticsearch.index.query.BoolFilterBuilder;
+import org.elasticsearch.index.query.AndFilterBuilder;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.FilterBuilder;
 import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -27,6 +28,7 @@ import io.yope.careers.domain.Profile;
 import io.yope.careers.domain.Title;
 import io.yope.careers.domain.User;
 import io.yope.careers.domain.User.Status;
+import io.yope.careers.domain.User.Type;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -36,6 +38,11 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class SearchHelper {
+
+    private static final FilterBuilder ACTIVE_USER_FILTER = FilterBuilders.boolFilter().must(FilterBuilders.termFilter("status", Status.ACTIVE.name().toLowerCase()));
+
+    private static final FilterBuilder CANDIDATE_USER_FILTER = FilterBuilders.boolFilter().must(FilterBuilders.termFilter("type", User.Type.CANDIDATE.name().toLowerCase()));;
+
 
     @Autowired
     private ElasticsearchTemplate template;
@@ -63,14 +70,12 @@ public class SearchHelper {
         if (user == null) {
             return QueryBuilders.filteredQuery(
                     QueryBuilders.matchAllQuery(),
-                    FilterBuilders.boolFilter().must(FilterBuilders.termFilter("status", Status.ACTIVE.name().toLowerCase())));
+                    ACTIVE_USER_FILTER);
         }
-        final Status status = user.getStatus() == null ? Status.ACTIVE : user.getStatus();
-        final BoolFilterBuilder filter = FilterBuilders.boolFilter().must(FilterBuilders.termFilter("status", status.name().toLowerCase()));
-
+        final FilterBuilder filter = this.getFilter(user);
         if (user.getHash() != null) {
             return QueryBuilders.filteredQuery(
-                    QueryBuilders.constantScoreQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("hash", user.getHash()))),
+                    QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("hash", user.getHash())),
                     filter);
         } if (user.getProfile() != null) {
             return QueryBuilders.filteredQuery(
@@ -84,6 +89,36 @@ public class SearchHelper {
         return QueryBuilders.filteredQuery(QueryBuilders.matchAllQuery(), filter);
     }
 
+    private FilterBuilder getFilter(final User user) {
+        final FilterBuilder statusFilter = this.getFilter(user.getStatus());
+        final FilterBuilder typeFilter = this.getFilter(user.getType());
+        final AndFilterBuilder filter = FilterBuilders.andFilter();
+        if (statusFilter != null) {
+            filter.add(statusFilter);
+        }
+        if (typeFilter != null) {
+            filter.add(typeFilter);
+        }
+        return filter;
+    }
+
+    private FilterBuilder getFilter(final Type type) {
+        if (type == null) {
+            return CANDIDATE_USER_FILTER;
+        }
+        return FilterBuilders.boolFilter().must(FilterBuilders.termFilter("type", type.name().toLowerCase()));
+    }
+
+    private FilterBuilder getFilter(final Status status) {
+        if (status == null) {
+            return ACTIVE_USER_FILTER;
+        }
+        if (status.equals(Status.UNKNOWN)) {
+            return FilterBuilders.matchAllFilter();
+        }
+        return FilterBuilders.boolFilter().must(FilterBuilders.termFilter("status", status.name().toLowerCase()));
+    }
+
     private QueryBuilder getTitleQuery(final Title title) {
         final BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
         if (title.getHash() != null) {
@@ -92,6 +127,9 @@ public class SearchHelper {
         } else if (title.getProfile() != null) {
             final Profile profile = title.getProfile();
             return this.getProfileQuery(profile, "titles.profile");
+        }
+        if (title.getStatus() != null) {
+            queryBuilder.must(QueryBuilders.termQuery("titles.status", title.getStatus().name().toLowerCase()));
         }
         if (title.getName() != null) {
             queryBuilder.must(QueryBuilders.termQuery("titles.name", title.getName().toLowerCase()));
