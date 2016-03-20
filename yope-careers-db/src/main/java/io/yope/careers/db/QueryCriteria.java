@@ -22,9 +22,9 @@ public class QueryCriteria {
 
     private final Authority authority;
 
-    private final int page;
+    private final Integer page;
 
-    private final int size;
+    private final Integer size;
 
 
 }

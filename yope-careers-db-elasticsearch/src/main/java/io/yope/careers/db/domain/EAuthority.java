@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Document(indexName = "authority", type = "user", shards = 1, replicas = 0, refreshInterval = "-1")
-public class ElasticAuthority {
+public class EAuthority {
 
     private Long created;
 

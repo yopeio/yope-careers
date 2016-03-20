@@ -3,10 +3,6 @@
  */
 package io.yope.careers.db.elastic;
 
-import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
-import static org.elasticsearch.index.query.QueryBuilders.nestedQuery;
-import static org.elasticsearch.index.query.QueryBuilders.termQuery;
-
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
@@ -35,12 +32,13 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.yope.careers.db.QueryCriteria;
-import io.yope.careers.db.domain.ElasticCandidate;
+import io.yope.careers.db.domain.EUser;
 import io.yope.careers.db.elastic.repositories.UserRepository;
 import io.yope.careers.domain.Page;
 import io.yope.careers.domain.Profile;
 import io.yope.careers.domain.Title;
 import io.yope.careers.domain.User;
+import io.yope.careers.domain.User.Status;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -68,30 +66,19 @@ public class ElasticUserServiceTest {
      */
     @Before
     public void setUp() throws Exception {
-        this.template.deleteIndex(ElasticCandidate.class);
-        this.template.createIndex(ElasticCandidate.class);
-        this.template.putMapping(ElasticCandidate.class);
-        this.template.refresh(ElasticCandidate.class, true);
-        final JavaType type = this.mapper.getTypeFactory().constructCollectionType(List.class, User.class);
-        final List<User> candidates = this.mapper.readValue(new File("src/test/resources/candidates.json"), type);
+        this.template.deleteIndex(EUser.class);
+        this.template.createIndex(EUser.class);
+        this.template.putMapping(EUser.class);
+        this.template.refresh(EUser.class, true);
+        final JavaType type = this.mapper.getTypeFactory().constructCollectionType(List.class, EUser.class);
+        final List<EUser> candidates = this.mapper.readValue(new File("src/test/resources/candidates.json"), type);
 
-        for (final User candidate : candidates) {
-            final ElasticCandidate elasticCandidate = ElasticCandidate.builder()
-                    .hash(candidate.getHash())
-                    .username(candidate.getUsername())
-                    .created(candidate.getCreated())
-                    .modified(candidate.getModified())
-                    .profile(candidate.getProfile())
-                    .password(candidate.getPassword())
-                    .active(candidate.getActive())
-                    .titles(candidate.getTitles())
-                    .build();
-
+        for (final EUser candidate : candidates) {
             final IndexQuery indexQuery = new IndexQueryBuilder()
-                    .withId(elasticCandidate.getHash())
-                    .withObject(elasticCandidate).build();
+                    .withId(candidate.getHash())
+                    .withObject(candidate).build();
             this.template.index(indexQuery);
-            this.template.refresh(ElasticCandidate.class, true);
+            this.template.refresh(EUser.class, true);
         }
     }
 
@@ -100,24 +87,63 @@ public class ElasticUserServiceTest {
         final String id = UUID.randomUUID().toString();
         User candidate = this.service.get("60b99c55-0763-4c81-b872-169c0582730a")
                 .withHash(id)
-                .withActive(Boolean.TRUE);
+                .withStatus(Status.ACTIVE);
         this.service.register(candidate);
         candidate = this.service.get(id);
         Assert.assertNotNull(candidate);
         Assert.assertNull(candidate.getTitles());
-        final Iterable<ElasticCandidate> candidates = this.repository.findAll();
+        Assert.assertEquals(Status.PENDING, candidate.getStatus());
+        final Iterable<EUser> candidates = this.repository.findAll();
         Assert.assertNotNull(candidates);
         Assert.assertEquals(101, Lists.newArrayList(candidates.iterator()).size());
     }
 
     @Test
     public void testGetAll() throws JsonProcessingException {
-        final Iterable<ElasticCandidate> candidates = this.repository.findAll();
+        final Iterable<EUser> candidates = this.repository.findAll();
         Assert.assertNotNull(candidates);
         Assert.assertEquals(100, Lists.newArrayList(candidates.iterator()).size());
-        for (final ElasticCandidate candidate : candidates) {
+        for (final EUser candidate : candidates) {
             Assert.assertNotNull(candidate.getTitles());
+            Assert.assertNotNull(candidate.getStatus());
+            if (!candidate.getStatus().equals(Status.ACTIVE)) {
+                log.info("{} {}", candidate.getHash(), candidate.getStatus());
+            }
         }
+    }
+
+    @Test
+    public void testMatchAllActive() {
+        final Page<User> page = this.service.search(QueryCriteria.builder().page(0).size(100).build());
+        Assert.assertNotNull(page);
+        Assert.assertEquals(0, page.getFrom().intValue());
+        Assert.assertEquals(96, page.getElements().size());
+        Assert.assertTrue(page.getLast());
+
+    }
+
+    @Test
+    public void testMatchAllInactive() {
+        final Page<User> page = this.service.search(QueryCriteria.builder()
+                .candidate(User.builder().status(Status.INACTIVE).build())
+                .page(0)
+                .size(10).build());
+        Assert.assertNotNull(page);
+        Assert.assertEquals(0, page.getFrom().intValue());
+        Assert.assertEquals(4, page.getElements().size());
+        Assert.assertTrue(page.getLast());
+    }
+
+    @Test
+    public void testMatchAllPending() {
+        final Page<User> page = this.service.search(QueryCriteria.builder()
+                .candidate(User.builder().status(Status.PENDING).build())
+                .page(0)
+                .size(10).build());
+        Assert.assertNotNull(page);
+        Assert.assertEquals(0, page.getFrom().intValue());
+        Assert.assertEquals(0, page.getElements().size());
+        Assert.assertTrue(page.getLast());
     }
 
     @Test
@@ -153,7 +179,7 @@ public class ElasticUserServiceTest {
      * @throws JsonProcessingException
      */
     @Test
-    public void testSearchByHashProfile() throws JsonProcessingException {
+    public void testSearchByTitleProfile() throws JsonProcessingException {
        Assert.assertNotNull(this.service);
        final List<Title> titles = Lists.newArrayList(
                Title.builder().profile(Profile.builder()
@@ -397,16 +423,17 @@ public class ElasticUserServiceTest {
     @Test
     public void testSearch() {
 
-        final QueryBuilder query = nestedQuery("titles", boolQuery().must(termQuery("titles.name", "diploma")));
-        log.info("{}", query);
-        final BoolFilterBuilder filter = FilterBuilders.boolFilter().must(FilterBuilders.termFilter("active", Boolean.FALSE));
-        log.info("{}", filter);
+        final QueryBuilder query = QueryBuilders.matchAllQuery();
+        log.info("\n{}", query);
+        final BoolFilterBuilder filter = FilterBuilders.boolFilter().must(FilterBuilders.termFilter("status", Status.ACTIVE.toString().toLowerCase()));
+        log.info("\n{}", filter);
         final QueryBuilder filteredQuery = QueryBuilders.filteredQuery(query, filter);
-        log.info("{}", filteredQuery);
-        final SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(filteredQuery).build();
+        log.info("\n{}", filteredQuery);
+        final SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(filteredQuery)
+                .withPageable(new PageRequest(0, 100)).build();
 
-        final List<ElasticCandidate> candidates = this.template.queryForList(searchQuery, ElasticCandidate.class);
-        Assert.assertEquals(1, candidates.size());
+        final List<EUser> candidates = this.template.queryForList(searchQuery, EUser.class);
+        Assert.assertEquals(96, candidates.size());
     }
 
     @Test

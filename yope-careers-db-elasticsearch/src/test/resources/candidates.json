@@ -2,7 +2,7 @@
   "created" : 1458406848774,
   "username" : "name0",
   "password" : "pwd",
-  "active": true,
+  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name0",
     "lastName" : "lastname0",
@@ -18,7 +18,7 @@
   "created" : 1458406848774,
   "username" : "name1",
   "password" : "pwd",
-  "active": true,
+  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name1",
     "lastName" : "lastname1",
@@ -33,8 +33,8 @@
 }, {
   "created" : 1458406848774,
   "username" : "name2",
-  "password" : "pwd",  "active": true,  "active": true,
-  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",  "status": "ACTIVE",
+  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name2",
     "lastName" : "lastname2",
@@ -53,7 +53,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name3",
-  "password" : "pwd",  "active": true,  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name3",
     "lastName" : "lastname3",
@@ -69,7 +69,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name4",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name4",
     "lastName" : "lastname4",
@@ -85,7 +85,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name5",
-  "password" : "pwd",  "active": false,
+  "password" : "pwd",  "status": "INACTIVE",
   "profile" : {
     "firstName" : "name5",
     "lastName" : "lastname5",
@@ -99,7 +99,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name6",
-  "password" : "pwd",  "active": false,
+  "password" : "pwd",  "status": "INACTIVE",
   "profile" : {
     "firstName" : "name6",
     "lastName" : "lastname6",
@@ -113,7 +113,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name7",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name7",
     "lastName" : "lastname7",
@@ -127,7 +127,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name8",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name8",
     "lastName" : "lastname8",
@@ -141,7 +141,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name9",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name9",
     "lastName" : "lastname9",
@@ -155,7 +155,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name10",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name10",
     "lastName" : "lastname10",
@@ -169,7 +169,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name11",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name11",
     "lastName" : "lastname11",
@@ -183,7 +183,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name12",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name12",
     "lastName" : "lastname12",
@@ -197,7 +197,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name13",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name13",
     "lastName" : "lastname13",
@@ -211,7 +211,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name14",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name14",
     "lastName" : "lastname14",
@@ -225,7 +225,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name15",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name15",
     "lastName" : "lastname15",
@@ -239,7 +239,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name16",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name16",
     "lastName" : "lastname16",
@@ -253,7 +253,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name17",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name17",
     "lastName" : "lastname17",
@@ -267,7 +267,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name18",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name18",
     "lastName" : "lastname18",
@@ -281,7 +281,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name19",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name19",
     "lastName" : "lastname19",
@@ -295,7 +295,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name20",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name20",
     "lastName" : "lastname20",
@@ -309,7 +309,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name21",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name21",
     "lastName" : "lastname21",
@@ -323,7 +323,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name22",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name22",
     "lastName" : "lastname22",
@@ -337,7 +337,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name23",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name23",
     "lastName" : "lastname23",
@@ -351,7 +351,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name24",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name24",
     "lastName" : "lastname24",
@@ -365,7 +365,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name25",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name25",
     "lastName" : "lastname25",
@@ -379,7 +379,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name26",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name26",
     "lastName" : "lastname26",
@@ -393,7 +393,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name27",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name27",
     "lastName" : "lastname27",
@@ -407,7 +407,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name28",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name28",
     "lastName" : "lastname28",
@@ -421,7 +421,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name29",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name29",
     "lastName" : "lastname29",
@@ -435,7 +435,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name30",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name30",
     "lastName" : "lastname30",
@@ -449,7 +449,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name31",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name31",
     "lastName" : "lastname31",
@@ -463,7 +463,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name32",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name32",
     "lastName" : "lastname32",
@@ -477,7 +477,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name33",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name33",
     "lastName" : "lastname33",
@@ -491,7 +491,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name34",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name34",
     "lastName" : "lastname34",
@@ -505,7 +505,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name35",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name35",
     "lastName" : "lastname35",
@@ -519,7 +519,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name36",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name36",
     "lastName" : "lastname36",
@@ -533,7 +533,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name37",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name37",
     "lastName" : "lastname37",
@@ -547,7 +547,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name38",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name38",
     "lastName" : "lastname38",
@@ -561,7 +561,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name39",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name39",
     "lastName" : "lastname39",
@@ -575,7 +575,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name40",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name40",
     "lastName" : "lastname40",
@@ -589,7 +589,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name41",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name41",
     "lastName" : "lastname41",
@@ -603,7 +603,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name42",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name42",
     "lastName" : "lastname42",
@@ -617,7 +617,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name43",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name43",
     "lastName" : "lastname43",
@@ -631,7 +631,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name44",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name44",
     "lastName" : "lastname44",
@@ -645,7 +645,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name45",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name45",
     "lastName" : "lastname45",
@@ -659,7 +659,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name46",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name46",
     "lastName" : "lastname46",
@@ -673,7 +673,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name47",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name47",
     "lastName" : "lastname47",
@@ -687,7 +687,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name48",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name48",
     "lastName" : "lastname48",
@@ -701,7 +701,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name49",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name49",
     "lastName" : "lastname49",
@@ -715,7 +715,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name50",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name50",
     "lastName" : "lastname50",
@@ -729,7 +729,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name51",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name51",
     "lastName" : "lastname51",
@@ -743,7 +743,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name52",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name52",
     "lastName" : "lastname52",
@@ -757,7 +757,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name53",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name53",
     "lastName" : "lastname53",
@@ -771,7 +771,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name54",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name54",
     "lastName" : "lastname54",
@@ -785,7 +785,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name55",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name55",
     "lastName" : "lastname55",
@@ -799,7 +799,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name56",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name56",
     "lastName" : "lastname56",
@@ -813,7 +813,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name57",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name57",
     "lastName" : "lastname57",
@@ -827,7 +827,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name58",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name58",
     "lastName" : "lastname58",
@@ -841,7 +841,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name59",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name59",
     "lastName" : "lastname59",
@@ -855,7 +855,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name60",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name60",
     "lastName" : "lastname60",
@@ -869,7 +869,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name61",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name61",
     "lastName" : "lastname61",
@@ -883,7 +883,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name62",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name62",
     "lastName" : "lastname62",
@@ -897,7 +897,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name63",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name63",
     "lastName" : "lastname63",
@@ -911,7 +911,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name64",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name64",
     "lastName" : "lastname64",
@@ -925,7 +925,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name65",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name65",
     "lastName" : "lastname65",
@@ -939,7 +939,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name66",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name66",
     "lastName" : "lastname66",
@@ -953,7 +953,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name67",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name67",
     "lastName" : "lastname67",
@@ -967,7 +967,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name68",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name68",
     "lastName" : "lastname68",
@@ -981,7 +981,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name69",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name69",
     "lastName" : "lastname69",
@@ -995,7 +995,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name70",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name70",
     "lastName" : "lastname70",
@@ -1009,7 +1009,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name71",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name71",
     "lastName" : "lastname71",
@@ -1023,7 +1023,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name72",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name72",
     "lastName" : "lastname72",
@@ -1037,7 +1037,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name73",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name73",
     "lastName" : "lastname73",
@@ -1051,7 +1051,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name74",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name74",
     "lastName" : "lastname74",
@@ -1065,7 +1065,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name75",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name75",
     "lastName" : "lastname75",
@@ -1079,7 +1079,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name76",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name76",
     "lastName" : "lastname76",
@@ -1093,7 +1093,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name77",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name77",
     "lastName" : "lastname77",
@@ -1107,7 +1107,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name78",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name78",
     "lastName" : "lastname78",
@@ -1121,7 +1121,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name79",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name79",
     "lastName" : "lastname79",
@@ -1135,7 +1135,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name80",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name80",
     "lastName" : "lastname80",
@@ -1149,7 +1149,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name81",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name81",
     "lastName" : "lastname81",
@@ -1163,7 +1163,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name82",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name82",
     "lastName" : "lastname82",
@@ -1177,7 +1177,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name83",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name83",
     "lastName" : "lastname83",
@@ -1191,7 +1191,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name84",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name84",
     "lastName" : "lastname84",
@@ -1205,7 +1205,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name85",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name85",
     "lastName" : "lastname85",
@@ -1219,7 +1219,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name86",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name86",
     "lastName" : "lastname86",
@@ -1233,7 +1233,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name87",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name87",
     "lastName" : "lastname87",
@@ -1247,7 +1247,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name88",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name88",
     "lastName" : "lastname88",
@@ -1261,7 +1261,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name89",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name89",
     "lastName" : "lastname89",
@@ -1275,7 +1275,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name90",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name90",
     "lastName" : "lastname90",
@@ -1289,7 +1289,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name91",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name91",
     "lastName" : "lastname91",
@@ -1303,7 +1303,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name92",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name92",
     "lastName" : "lastname92",
@@ -1317,7 +1317,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name93",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name93",
     "lastName" : "lastname93",
@@ -1331,7 +1331,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name94",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name94",
     "lastName" : "lastname94",
@@ -1345,7 +1345,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name95",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name95",
     "lastName" : "lastname95",
@@ -1359,7 +1359,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name96",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name96",
     "lastName" : "lastname96",
@@ -1373,7 +1373,7 @@
 }, {
   "created" : 1458406848774,
   "username" : "name97",
-  "password" : "pwd",  "active": true,
+  "password" : "pwd",  "status": "INACTIVE",
   "profile" : {
     "firstName" : "name97",
     "lastName" : "lastname97",
@@ -1388,7 +1388,7 @@
   "created" : 1458406848774,
   "username" : "name98",
   "password" : "pwd",
-  "active": false,
+  "status": "INACTIVE",
   "profile" : {
     "firstName" : "name98",
     "lastName" : "lastname98",
@@ -1403,7 +1403,7 @@
   "created" : 1458406848774,
   "username" : "name99",
   "password" : "pwd",
-  "active": false,
+  "status": "ACTIVE",
   "profile" : {
     "firstName" : "name99",
     "lastName" : "lastname99",

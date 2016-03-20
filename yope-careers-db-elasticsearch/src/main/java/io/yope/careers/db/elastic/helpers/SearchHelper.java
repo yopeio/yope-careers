@@ -21,11 +21,12 @@ import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Component;
 
 import io.yope.careers.db.QueryCriteria;
-import io.yope.careers.db.domain.ElasticCandidate;
+import io.yope.careers.db.domain.EUser;
 import io.yope.careers.domain.Page;
 import io.yope.careers.domain.Profile;
 import io.yope.careers.domain.Title;
 import io.yope.careers.domain.User;
+import io.yope.careers.domain.User.Status;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -40,66 +41,88 @@ public class SearchHelper {
     private ElasticsearchTemplate template;
 
     public Page<User> searchUser(final QueryCriteria criteria){
-        final User user = criteria.getCandidate();
-        final BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
-        QueryBuilder query = null;
-        if (user.getHash() != null) {
-            queryBuilder.must(QueryBuilders.matchQuery("hash", user.getHash()));
-            query = QueryBuilders.constantScoreQuery(queryBuilder);
-        } else if (user.getProfile() != null) {
-            query = QueryBuilders.nestedQuery("profile", queryBuilder);
-            if (user.getProfile().getFirstName() != null) {
-                queryBuilder.must(QueryBuilders.termQuery("profile.firstName", user.getProfile().getFirstName().toLowerCase()));
-            }
-            if (user.getProfile().getLastName() != null) {
-                queryBuilder.must(QueryBuilders.termQuery("profile.lastName", user.getProfile().getLastName().toLowerCase()));
-            }
-            if (user.getProfile().getDescription() != null) {
-                final String[] values = StringUtils.split(user.getProfile().getDescription().toLowerCase());
-                queryBuilder.must(QueryBuilders.termsQuery("profile.description", values));
-            }
-        } else if (CollectionUtils.isNotEmpty(user.getTitles())) {
-            query = QueryBuilders.nestedQuery("titles", queryBuilder);
-            final Title title = user.getTitles().get(0);
-            if (title.getHash() != null) {
-                queryBuilder.must(QueryBuilders.matchQuery("titles.hash", title.getHash()));
-            }
-            if (title.getName() != null) {
-                queryBuilder.must(QueryBuilders.termQuery("titles.name", title.getName().toLowerCase()));
-            }
-            if (title.getDescription() != null) {
-                final String[] values = StringUtils.split(title.getDescription().toLowerCase());
-                queryBuilder.must(QueryBuilders.termsQuery("titles.description", values));
-            }
-            if (title.getProfile() != null) {
-                final Profile profile = title.getProfile();
-            }
-        }
-        Boolean active = Boolean.TRUE;
-        if (user.getActive() != null) {
-            active = user.getActive();
-        }
-        final BoolFilterBuilder filter = FilterBuilders.boolFilter().must(FilterBuilders.termFilter("active", active));
-        final QueryBuilder filteredQuery = QueryBuilders.filteredQuery(query, filter);
-        log.info("\n {}", filteredQuery);
-        final SearchQuery searchQuery = new NativeSearchQueryBuilder()
+        final SearchQuery searchQuery = this.getSearchQuery(criteria);
+        final FacetedPage<EUser> result = this.template.queryForPage(searchQuery, EUser.class);
+
+        return new Page<User>(result.getContent().stream()
+                .map(x -> x.toCandidate()).collect(Collectors.toList()),
+                result.getTotalElements(), result.getTotalPages(),
+                result.getNumber(), result.isLast());
+    }
+
+    private SearchQuery getSearchQuery(final QueryCriteria criteria) {
+        final QueryBuilder filteredQuery = this.getUserQuery(criteria.getCandidate());
+        log.info("Query: \n{}", filteredQuery);
+        return new NativeSearchQueryBuilder()
                 .withQuery(filteredQuery)
                 .withPageable(new PageRequest(criteria.getPage(), criteria.getSize()))
                 .build();
-        final FacetedPage<ElasticCandidate> result = this.template.queryForPage(searchQuery, ElasticCandidate.class);
+    }
 
-        return new Page<User>(result.getContent().stream()
-                .map(x -> User.builder()
-                .created(x.getCreated())
-                .hash(x.getHash())
-                .modified(x.getModified())
-                .profile(x.getProfile())
-                .password(x.getPassword())
-                .active(x.getActive())
-                .titles(x.getTitles())
-                .build()).collect(Collectors.toList()),
-                result.getTotalElements(), result.getTotalPages(),
-                result.getNumber(), result.isLast());
+    private QueryBuilder getUserQuery(final User user) {
+        if (user == null) {
+            return QueryBuilders.filteredQuery(
+                    QueryBuilders.matchAllQuery(),
+                    FilterBuilders.boolFilter().must(FilterBuilders.termFilter("status", Status.ACTIVE.name().toLowerCase())));
+        }
+        final Status status = user.getStatus() == null ? Status.ACTIVE : user.getStatus();
+        final BoolFilterBuilder filter = FilterBuilders.boolFilter().must(FilterBuilders.termFilter("status", status.name().toLowerCase()));
+
+        if (user.getHash() != null) {
+            return QueryBuilders.filteredQuery(
+                    QueryBuilders.constantScoreQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("hash", user.getHash()))),
+                    filter);
+        } if (user.getProfile() != null) {
+            return QueryBuilders.filteredQuery(
+                    this.getProfileQuery(user.getProfile(), "profile"),
+                    filter);
+        } if (CollectionUtils.isNotEmpty(user.getTitles())) {
+            return QueryBuilders.filteredQuery(
+                    this.getTitleQuery(user.getTitles().get(0)),
+                    filter);
+        }
+        return QueryBuilders.filteredQuery(QueryBuilders.matchAllQuery(), filter);
+    }
+
+    private QueryBuilder getTitleQuery(final Title title) {
+        final BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        if (title.getHash() != null) {
+            queryBuilder.must(QueryBuilders.matchQuery("titles.hash", title.getHash()));
+            return QueryBuilders.nestedQuery("titles", queryBuilder);
+        } else if (title.getProfile() != null) {
+            final Profile profile = title.getProfile();
+            return this.getProfileQuery(profile, "titles.profile");
+        }
+        if (title.getName() != null) {
+            queryBuilder.must(QueryBuilders.termQuery("titles.name", title.getName().toLowerCase()));
+        }
+        if (title.getDescription() != null) {
+            final String[] values = StringUtils.split(title.getDescription().toLowerCase());
+            queryBuilder.must(QueryBuilders.termsQuery("titles.description", values));
+        }
+        return QueryBuilders.nestedQuery("titles", queryBuilder);
+    }
+
+    private QueryBuilder getProfileQuery(final Profile profile, final String path) {
+        final BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        if (profile.getFirstName() != null) {
+            queryBuilder.must(QueryBuilders.termQuery(path+".firstName", profile.getFirstName().toLowerCase()));
+        }
+        if (profile.getLastName() != null) {
+            queryBuilder.must(QueryBuilders.termQuery(path+".lastName", profile.getLastName().toLowerCase()));
+        }
+        if (profile.getRole() != null) {
+            final String[] values = StringUtils.split(profile.getRole().toLowerCase());
+            queryBuilder.must(QueryBuilders.termsQuery(path+".description", values));
+        }
+        if (profile.getDescription() != null) {
+            final String[] values = StringUtils.split(profile.getDescription().toLowerCase());
+            queryBuilder.must(QueryBuilders.termsQuery(path+".description", values));
+        }
+        if (profile.getTags() != null) {
+            queryBuilder.must(QueryBuilders.termsQuery(path+".tags", profile.getTags()));
+        }
+        return QueryBuilders.nestedQuery(path, queryBuilder);
     }
 
 }

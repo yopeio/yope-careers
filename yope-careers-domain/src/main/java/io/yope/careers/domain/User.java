@@ -26,12 +26,22 @@ import lombok.experimental.Wither;
 @NoArgsConstructor
 @Getter
 @JsonInclude(Include.NON_NULL)
-@ToString(of = {"hash", "username", "profile"}, includeFieldNames = false)
+@ToString(of = {"type", "username", "profile"}, includeFieldNames = false)
 public class User {
+
+    public enum Type {
+        CANDIDATE, RECRUITER, AUTHORITY;
+    }
+
+    public enum Status {
+        ACTIVE, INACTIVE, PENDING;
+    }
 
     private Long created;
 
     private Long modified;
+
+    private Type type;
 
     private String username;
 
@@ -40,7 +50,7 @@ public class User {
 
     private Profile profile;
 
-    private Boolean active;
+    private Status status;
 
     private String hash;
 

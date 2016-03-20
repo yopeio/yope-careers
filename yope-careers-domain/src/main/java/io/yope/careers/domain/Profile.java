@@ -32,6 +32,12 @@ public class Profile {
 
     private String lastName;
 
+    private Long dateOfBirth;
+
+    private String[] tags;
+
+    private String role;
+
     private String description;
 
     private Long created;
