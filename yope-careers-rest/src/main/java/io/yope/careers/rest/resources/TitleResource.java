@@ -47,7 +47,7 @@ public class TitleResource {
      * VERIFICATION
      */
 
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(value="/{id}/verification", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public @ResponseBody Response<String> registerVerification(@RequestBody final VerificationRegistrationRequest request) {
         return new Response<String>();
     }

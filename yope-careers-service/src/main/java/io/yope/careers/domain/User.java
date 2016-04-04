@@ -30,11 +30,11 @@ import lombok.experimental.Wither;
 public class User {
 
     public enum Type {
-        CANDIDATE, RECRUITER, AUTHORITY;
+        CANDIDATE, RECRUITER, AUTHORITY, ADMIN;
     }
 
     public enum Status {
-        ACTIVE, INACTIVE, PENDING, UNKNOWN;
+        ACTIVE, INACTIVE, PENDING, UNKNOWN, SUSPENDED;
     }
 
     private Long created;

@@ -1,8 +1,12 @@
 io/yope/careers/rest/resources/TitleResource.class
+io/yope/careers/rest/resources/domain/Error.class
 io/yope/careers/rest/resources/AuthorityResource.class
 io/yope/careers/rest/resources/domain/TitleRegistrationRequest.class
 io/yope/careers/rest/resources/domain/Response.class
+io/yope/careers/rest/services/BlockchainService.class
 io/yope/careers/rest/resources/CandidateResource.class
 io/yope/careers/rest/resources/domain/AuthorityRegistrationRequest.class
 io/yope/careers/rest/resources/domain/VerificationRegistrationRequest.class
+io/yope/careers/rest/services/UserHelper.class
 io/yope/careers/rest/resources/domain/CandidateRegistrationRequest.class
+io/yope/careers/rest/resources/domain/Error$ErrorBuilder.class

@@ -1,0 +1,11 @@
+logging:
+  level:
+    org.springframework: INFO
+    org.elasticsearch: WARN
+    org.quartz: WARN
+
+server:
+  port: 8081
+
+spring:
+  profiles.active: default

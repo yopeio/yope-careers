@@ -13,4 +13,6 @@ import io.yope.careers.db.domain.EUser;
  */
 public interface UserRepository extends ElasticsearchRepository<EUser, String> {
 
+    EUser findByUsername(String username);
+
 }

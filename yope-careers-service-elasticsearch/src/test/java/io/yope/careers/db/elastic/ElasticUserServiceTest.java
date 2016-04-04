@@ -39,13 +39,11 @@ import io.yope.careers.domain.Title;
 import io.yope.careers.domain.User;
 import io.yope.careers.domain.User.Status;
 import io.yope.careers.service.QueryCriteria;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Massimiliano Gerardi
  *
  */
-@Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=ElasticConfiguration.class, loader=AnnotationConfigContextLoader.class)
 public class ElasticUserServiceTest {
@@ -106,9 +104,6 @@ public class ElasticUserServiceTest {
         for (final EUser candidate : candidates) {
             Assert.assertNotNull(candidate.getTitles());
             Assert.assertNotNull(candidate.getStatus());
-            if (!candidate.getStatus().equals(Status.ACTIVE)) {
-                log.info("{} {}", candidate.getHash(), candidate.getStatus());
-            }
         }
     }
 
@@ -291,7 +286,6 @@ public class ElasticUserServiceTest {
        final User candidate = User.builder().profile(Profile.builder().description("cobol software engineer").build()).build();
        final Page<User> page = this.service.search(QueryCriteria.builder().page(0).size(10).candidate(candidate).build());
        Assert.assertNotNull(page);
-       page.getElements().forEach(c -> log.info("{}", c));
        Assert.assertEquals(0, page.getFrom().intValue());
        Assert.assertEquals(4, page.getElements().size());
        Assert.assertTrue(page.getLast());
@@ -307,7 +301,6 @@ public class ElasticUserServiceTest {
        final User candidate = User.builder().profile(Profile.builder().description("javascript cobol software developer").build()).build();
        final Page<User> page = this.service.search(QueryCriteria.builder().page(0).size(10).candidate(candidate).build());
        Assert.assertNotNull(page);
-       page.getElements().forEach(c -> log.info("{}", c));
        Assert.assertEquals(0, page.getFrom().intValue());
        Assert.assertEquals(3, page.getElements().size());
        Assert.assertTrue(page.getLast());
@@ -427,7 +420,7 @@ public class ElasticUserServiceTest {
     }
 
     @Test
-    public void testGetTitles() {
+    public void testGetTitles() throws Exception {
         final Page<Title> page = this.service.getTitles("60b99c55-0763-4c81-b872-169c0582730a");
         Assert.assertNotNull(page);
         Assert.assertEquals(0, page.getFrom().intValue());
@@ -436,7 +429,7 @@ public class ElasticUserServiceTest {
     }
 
     @Test
-    public void testGetTitlesTwoHits() {
+    public void testGetTitlesTwoHits() throws Exception {
         final Page<Title> page = this.service.getTitles("f65aebc5-43fd-4429-8915-7c906871d208");
         Assert.assertNotNull(page);
         Assert.assertEquals(0, page.getFrom().intValue());
@@ -445,7 +438,7 @@ public class ElasticUserServiceTest {
     }
 
     @Test
-    public void testModify() {
+    public void testModify() throws Exception {
         final User candidate = this.service.get("70aa978d-0ca7-4b0e-9d93-55939d50e71a");
         final User newCandidate = this.service.modify("70aa978d-0ca7-4b0e-9d93-55939d50e71a", candidate.toBuilder().
                 profile(candidate.getProfile().toBuilder().firstName("massi").build()).build());
@@ -461,11 +454,8 @@ public class ElasticUserServiceTest {
     public void testSearch() {
 
         final QueryBuilder query = QueryBuilders.matchAllQuery();
-        log.info("\n{}", query);
         final BoolFilterBuilder filter = FilterBuilders.boolFilter().must(FilterBuilders.termFilter("status", Status.ACTIVE.toString().toLowerCase()));
-        log.info("\n{}", filter);
         final QueryBuilder filteredQuery = QueryBuilders.filteredQuery(query, filter);
-        log.info("\n{}", filteredQuery);
         final SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(filteredQuery)
                 .withPageable(new PageRequest(0, 100)).build();
 
@@ -474,7 +464,7 @@ public class ElasticUserServiceTest {
     }
 
     @Test
-    public void testConfirmTitleVerification() {
+    public void testConfirmTitleVerification() throws Exception {
         final String titleId = "84238316-c9dd-470b-9034-3a8f280e4b07";
         Title title = this.service.confirmTitleVerification(titleId);
         Assert.assertNotNull(title);
@@ -484,19 +474,19 @@ public class ElasticUserServiceTest {
     }
 
     @Test(expected = Exception.class)
-    public void testConfirmTitleVerificationError() {
+    public void testConfirmTitleVerificationError() throws Exception {
         final String titleId = "bf47c9ca-ebd0-4ldf-b58d-ffb8399b2829";
         this.service.confirmTitleVerification(titleId);
     }
 
     @Test(expected = Exception.class)
-    public void testRevokeTitleVerificationError() {
+    public void testRevokeTitleVerificationError() throws Exception {
         final String titleId = "84238316-c9dd-470b-9034-3a8f280e4b07";
         this.service.revokeTitleVerification(titleId);
     }
 
     @Test
-    public void testRevokeTitleVerification() {
+    public void testRevokeTitleVerification() throws Exception {
         final String titleId = "bf47c9ca-ebd0-4ldf-b58d-ffb8399b2829";
         Title title = this.service.revokeTitleVerification(titleId);
         Assert.assertNotNull(title);
@@ -505,7 +495,7 @@ public class ElasticUserServiceTest {
         Assert.assertEquals(Title.Status.UNVERIFIED, title.getStatus());
     }
     @Test
-    public void testAddRemoveTitle() {
+    public void testAddRemoveTitle() throws Exception {
         final String id = "fa6d7dc3-14c0-46db-b7ba-e15392d4cb21";
         User candidate = this.service.get(id);
         Assert.assertEquals(1, candidate.getTitles().size());
@@ -549,7 +539,7 @@ public class ElasticUserServiceTest {
     }
 
     @Test
-    public void testGetTitle() {
+    public void testGetTitle() throws Exception {
         final String titleId = "70aa978d-0ca7-4b0e-9d92-55939d50e71a";
         final Title title = this.service.getTitle(titleId);
         Assert.assertNotNull(title);

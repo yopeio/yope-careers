@@ -59,7 +59,6 @@ public class SearchHelper {
 
     private SearchQuery getSearchQuery(final QueryCriteria criteria) {
         final QueryBuilder filteredQuery = this.getUserQuery(criteria.getCandidate());
-        log.info("Query: \n{}", filteredQuery);
         return new NativeSearchQueryBuilder()
                 .withQuery(filteredQuery)
                 .withPageable(new PageRequest(criteria.getPage(), criteria.getSize()))

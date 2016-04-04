@@ -8,6 +8,7 @@ import io.yope.careers.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Massimiliano Gerardi
@@ -16,15 +17,16 @@ import lombok.Getter;
 @Builder
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class QueryCriteria {
 
-    private final User candidate;
+    private User candidate;
 
-    private final Authority authority;
+    private Authority authority;
 
-    private final Integer page;
+    private Integer page;
 
-    private final Integer size;
+    private Integer size;
 
 
 }

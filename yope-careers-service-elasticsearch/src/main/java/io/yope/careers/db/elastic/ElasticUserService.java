@@ -193,4 +193,13 @@ public class ElasticUserService implements UserService {
         return titles.stream().filter(x -> x.getHash().equals(titleId)).findFirst().orElse(null);
     }
 
+    @Override
+    public User getByUsername(final String username) {
+        final EUser currentCandidate = this.repository.findByUsername(username);
+        if (currentCandidate == null) {
+            return null;
+        }
+        return currentCandidate.toCandidate();
+    }
+
 }

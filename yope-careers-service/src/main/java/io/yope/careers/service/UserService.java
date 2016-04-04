@@ -20,6 +20,8 @@ public interface UserService {
 
     User get(String id) ;
 
+    User getByUsername(String id) ;
+
     User modify(String id, User user) throws UserNotFoundException;
 
     User delete(String id) throws UserNotFoundException;

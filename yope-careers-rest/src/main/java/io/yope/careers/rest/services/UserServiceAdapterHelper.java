@@ -4,6 +4,7 @@
 package io.yope.careers.rest.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import io.yope.careers.domain.Page;
 import io.yope.careers.domain.Title;
@@ -16,7 +17,8 @@ import io.yope.careers.service.exceptions.UserNotFoundException;
  * @author Massimiliano Gerardi
  *
  */
-public class UserHelper {
+@Component
+public class UserServiceAdapterHelper {
 
     @Autowired
     private BlockchainService blockchainService;
@@ -35,6 +37,10 @@ public class UserHelper {
     }
 
     public User get(final String id) {
+        final User user = this.userService.getByUsername(id);
+        if (user != null) {
+            return user;
+        }
         return this.userService.get(id);
     }
 
