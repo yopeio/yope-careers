@@ -1,6 +1,0 @@
-/Users/mgerardi/projects/yope-careers-parent/yope-careers-service-elasticsearch/src/main/java/io/yope/careers/db/domain/EAuthority.java
-/Users/mgerardi/projects/yope-careers-parent/yope-careers-service-elasticsearch/src/main/java/io/yope/careers/db/elastic/ElasticUserService.java
-/Users/mgerardi/projects/yope-careers-parent/yope-careers-service-elasticsearch/src/main/java/io/yope/careers/db/elastic/repositories/UserRepository.java
-/Users/mgerardi/projects/yope-careers-parent/yope-careers-service-elasticsearch/src/main/java/io/yope/careers/db/domain/ETitle.java
-/Users/mgerardi/projects/yope-careers-parent/yope-careers-service-elasticsearch/src/main/java/io/yope/careers/db/domain/EUser.java
-/Users/mgerardi/projects/yope-careers-parent/yope-careers-service-elasticsearch/src/main/java/io/yope/careers/db/elastic/helpers/SearchHelper.java
