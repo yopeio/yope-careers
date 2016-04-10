@@ -1,4 +1,4 @@
-package io.yope.careers.rest.services;
+package io.yope.careers.service;
 
 public interface BlockchainService {
 

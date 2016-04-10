@@ -1,7 +1,7 @@
 /**
  *
  */
-package io.yope.careers.rest.services;
+package io.yope.careers.service;
 
 import java.util.UUID;
 

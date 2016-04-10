@@ -17,7 +17,7 @@ import lombok.experimental.Wither;
  * @author Massimiliano Gerardi
  *
  */
-@Builder
+@Builder(toBuilder=true)
 @Wither
 @AllArgsConstructor
 @NoArgsConstructor
