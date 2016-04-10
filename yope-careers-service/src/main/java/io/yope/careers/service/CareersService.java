@@ -7,11 +7,15 @@ import io.yope.careers.domain.Page;
 import io.yope.careers.domain.Title;
 import io.yope.careers.domain.User;
 import io.yope.careers.service.exceptions.UserNotFoundException;
+import io.yope.careers.visitor.CandidateVisitor;
+import io.yope.careers.visitor.TitleVisitor;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Massimiliano Gerardi
  *
  */
+@Component
 public class CareersService {
 
     UserService userService;
@@ -19,8 +23,11 @@ public class CareersService {
     BlockchainService blockchainService;
 
     public User register(final User user) {
-        final String hash = blockchainService.register(user);
-        final User currentUser = userService.register(user.withHash(hash));
+        final String hash = this.blockchainService.register(
+                CandidateVisitor.builder()
+                        .user(user)
+                        .build());
+        final User currentUser = this.userService.register(user.withHash(hash));
         return currentUser;
     }
 
@@ -62,7 +69,7 @@ public class CareersService {
         if  (title.getProfile() == null) {
             builder.profile(user.getProfile());
         }
-        final String hash = blockchainService.register(builder.build());
+        final String hash = blockchainService.register(TitleVisitor.builder().title(title).build());
         return userService.registerTitle(userId, title.withHash(hash));
     }
 

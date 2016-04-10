@@ -9,3 +9,7 @@ server:
 
 spring:
   profiles.active: default
+
+org.ethereum:
+    address: http://ethereum.yope.io
+    accountAddress: 0x03733b713032e9040d04acd4720bedaa717378df
