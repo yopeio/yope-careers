@@ -56,4 +56,6 @@ public class User {
 
     private List<Title> titles;
 
+    private Long dateOfBirth;
+
 }
