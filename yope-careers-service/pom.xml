@@ -21,6 +21,9 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-    </dependencies>
-
+      <dependency>
+          <groupId>io.yope</groupId>
+          <artifactId>yope-ethereum-services</artifactId>
+      </dependency>
+  </dependencies>
 </project>
