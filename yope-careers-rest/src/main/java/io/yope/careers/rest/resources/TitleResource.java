@@ -36,10 +36,10 @@ public class TitleResource {
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public @ResponseBody Response<Title> registerTitle(@RequestBody final TitleRegistrationRequest request, final User user) {
         try {
-            return new Response<Title>(titleService.registerTitle(user, request), null, null);
+            return new Response<Title>(titleService.registerTitle(user.getHash(), request), null, null);
         } catch (final UserNotFoundException e) {
             Log.error("Getting User by id", e);
-            return new Response<Title>(Boolean.FALSE, HttpStatus.NOT_FOUND.value(), Lists.newArrayList(Error.builder().field("id").message(id).build()));
+            return new Response<Title>(Boolean.FALSE, HttpStatus.NOT_FOUND.value(), Lists.newArrayList(Error.builder().message("User Not Found").build()));
         }
     }
 

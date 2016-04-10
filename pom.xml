@@ -17,7 +17,7 @@
         <module>yope-careers-service</module>
         <module>yope-careers-db-service</module>
         <module>yope-careers-service-elasticsearch</module>
-        <module>yope-careers-security</module>
+        <!-- >module>yope-careers-security</module -->
     </modules>
 
     <dependencyManagement>
@@ -32,11 +32,13 @@
                 <artifactId>yope-careers-db-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!-- 
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>yope-careers-security</artifactId>
                 <version>${project.version}</version>
             </dependency>
+             -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>yope-careers-service-elasticsearch</artifactId>

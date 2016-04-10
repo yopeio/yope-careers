@@ -50,5 +50,9 @@ public class UserServiceAdapter {
         return service.getTitles(get(id).getHash());
     }
 
+    public boolean exist(final String username) {
+        return service.exist(username);
+    }
+
 
 }
