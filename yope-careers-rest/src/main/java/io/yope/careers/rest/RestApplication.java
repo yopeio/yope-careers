@@ -16,7 +16,8 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan({
-    "io.yope.careers",
+        "io.yope.careers",
+        "io.yope.ethereum.configuration"
     })
 @Configuration
 public class RestApplication {
