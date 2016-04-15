@@ -1,17 +1,15 @@
 package io.yope.careers.visitor;
 
 import io.yope.careers.domain.User;
-import io.yope.ethereum.visitor.BlockchainVisitor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
-import static io.yope.ethereum.utils.EthereumUtil.removeLineBreaks;
+import org.apache.commons.lang3.StringUtils;
 
 @Builder
 @AllArgsConstructor
 @Getter
-public class CandidateVisitor extends BlockchainVisitor {
+public class CandidateVisitor extends CareerVisitor {
 
     private User user;
 
@@ -26,20 +24,32 @@ public class CandidateVisitor extends BlockchainVisitor {
     }
 
     @Override
-    public String getNewMethod() {
-        return "newCandidate";
+    public String getModifyMethod() {
+        return "set";
     }
 
     @Override
-    public String getRetrieveMethod() {
+    public String getRunMethod() {
         return "get";
     }
 
     @Override
     public Object[] getArgs() {
-        return new Object[]{user.getProfile().getFirstName(),
-                user.getProfile().getLastName(),
-                user.getDateOfBirth()};
+        Object[] args = new Object[3];
+        if (user != null) {
+            if (user.getProfile() != null) {
+                if (StringUtils.isNotBlank(user.getProfile().getFirstName())) {
+                    args[0] = user.getProfile().getFirstName();
+                }
+                if (StringUtils.isNotBlank(user.getProfile().getLastName())) {
+                    args[1] = user.getProfile().getLastName();
+                }
+            }
+            if (user.getDateOfBirth() != null && user.getDateOfBirth() > 0) {
+                args[2] = user.getDateOfBirth();
+            }
+        }
+        return args;
     }
 
 }

@@ -4,10 +4,12 @@ contract CandidateContract {
 
     struct Candidate {
         string name;
+        string lastname;
+        uint birthdate;
     }
 
-    function newCandidate(string name) {
-        candidate = Candidate(name);
+    function set(string name, string lastname, uint birthdate) {
+        candidate = Candidate(name, lastname, birthdate);
     }
 
     function get() constant returns (string retVal) {

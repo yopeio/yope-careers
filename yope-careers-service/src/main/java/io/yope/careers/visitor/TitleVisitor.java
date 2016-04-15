@@ -7,11 +7,12 @@ import lombok.Builder;
 import lombok.Getter;
 
 import static io.yope.ethereum.utils.EthereumUtil.removeLineBreaks;
+import static io.yope.ethereum.utils.EthereumUtil.removeLineBreaksFromFile;
 
 @Builder
 @AllArgsConstructor
 @Getter
-public class TitleVisitor extends BlockchainVisitor {
+public class TitleVisitor extends CareerVisitor {
 
     private Title title;
 
@@ -26,13 +27,13 @@ public class TitleVisitor extends BlockchainVisitor {
     }
 
     @Override
-    public String getNewMethod() {
-        return "newTitle";
+    public String getRunMethod() {
+        return "get";
     }
 
     @Override
-    public String getRetrieveMethod() {
-        return "get";
+    public String getModifyMethod() {
+        return "set";
     }
 
     @Override

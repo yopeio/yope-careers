@@ -8,7 +8,7 @@ contract TitleContract {
         string name;
     }
 
-    function newTitle(string name, string surname, uint birthdate) {
+    function set(string name, string surname, uint birthdate) {
         title = Title(name, surname, birthdate);
     }
 
