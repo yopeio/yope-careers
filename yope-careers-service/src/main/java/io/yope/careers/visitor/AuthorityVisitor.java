@@ -1,6 +1,7 @@
 package io.yope.careers.visitor;
 
 import io.yope.careers.domain.User;
+import io.yope.ethereum.model.Method;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,18 +26,10 @@ public class AuthorityVisitor extends CareerVisitor {
     }
 
     @Override
-    public String getModifyMethod() {
-        return "set";
-    }
-
-    @Override
-    public String getRunMethod() {
-        return "get";
-    }
-
-    @Override
-    public Object[] getModifyArgs() {
-        return new Object[] {user.getProfile().getFirstName()};
+    public void addMethods() {
+        this.addMethod(Method.builder().type(Method.Type.MODIFY).name("set")
+                .args(new Object[]{user.getProfile().getFirstName()}).build());
+        this.addMethod(Method.builder().type(Method.Type.RUN).name("get").args(new Object[0]).build());
     }
 
 }

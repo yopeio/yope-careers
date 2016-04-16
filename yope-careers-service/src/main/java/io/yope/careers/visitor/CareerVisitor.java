@@ -14,11 +14,6 @@ public abstract class CareerVisitor extends BlockchainVisitor {
         return removeLineBreaksFromFile(getContractFile());
     }
 
-    @Override
-    public Object[] getRunArgs() {
-        return new Object[0];
-    }
-
     private String removeLineBreaksFromFile(final String file) {
         InputStream stream = this.getClass().getClassLoader().getResourceAsStream(file);
         BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));

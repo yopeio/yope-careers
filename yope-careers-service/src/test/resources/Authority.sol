@@ -9,7 +9,12 @@ contract Authority {
         authority = Authority(name);
     }
 
+    function validate(string name) {
+        authority = Authority(name);
+    }
+
     function get() constant returns (string retVal) {
             return authority.name;
     }
+
 }

@@ -4,13 +4,12 @@ package io.yope.ethereum;
 import com.cegeka.tetherj.NoSuchContractMethod;
 import io.yope.careers.domain.Profile;
 import io.yope.careers.domain.User;
-import io.yope.careers.visitor.AuthorityVisitor;
 import io.yope.careers.visitor.CareerVisitor;
 import io.yope.careers.visitor.VisitorFactory;
 import io.yope.ethereum.exceptions.ExceededGasException;
+import io.yope.ethereum.model.Method;
 import io.yope.ethereum.model.Receipt;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
 import org.junit.Test;
 
 import java.util.Map;
@@ -56,6 +55,16 @@ public class AuthorityTest extends BaseTest {
         log.info("authorityName: {}", authorityName);
         assertEquals(authorityName, "New Tel Aviv University");
 
+        newVisitor.addMethod(Method.builder().type(Method.Type.MODIFY).name("validate")
+                .args(new Object[]{"UTA"}).build());
+
+        receipt = blockchainFacade.modifyContract(contractAddress,
+                newVisitor
+        );
+        log.info("receipt: {}", receipt);
+        authorityName = blockchainFacade.<String>runContract(contractAddress, visitor);
+        log.info("authorityName: {}", authorityName);
+        assertEquals(authorityName, "UTA");
     }
 
     private CareerVisitor getVisitor(User user) {
