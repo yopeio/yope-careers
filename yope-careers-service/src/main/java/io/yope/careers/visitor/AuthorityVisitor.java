@@ -7,21 +7,21 @@ import lombok.Getter;
 import lombok.experimental.Wither;
 
 @Builder
+@Wither
 @AllArgsConstructor
 @Getter
-@Wither
-public class CandidateVisitor extends CareerVisitor {
+public class AuthorityVisitor extends CareerVisitor {
 
     private User user;
 
     @Override
     public String getContractKey() {
-        return "Candidate";
+        return "Authority";
     }
 
     @Override
     public String getContractFile() {
-        return "Candidate.sol";
+        return "Authority.sol";
     }
 
     @Override
@@ -36,7 +36,7 @@ public class CandidateVisitor extends CareerVisitor {
 
     @Override
     public Object[] getModifyArgs() {
-        return new Object[] {user.getProfile().getFirstName(), user.getProfile().getLastName(), user.getDateOfBirth()};
+        return new Object[] {user.getProfile().getFirstName()};
     }
 
 }

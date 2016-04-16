@@ -1,4 +1,4 @@
-contract CandidateContract {
+contract Candidate {
 
     Candidate candidate;
 

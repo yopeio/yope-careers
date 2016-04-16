@@ -5,6 +5,7 @@ import io.yope.ethereum.visitor.BlockchainVisitor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.Wither;
 
 import static io.yope.ethereum.utils.EthereumUtil.removeLineBreaks;
 import static io.yope.ethereum.utils.EthereumUtil.removeLineBreaksFromFile;
@@ -12,18 +13,19 @@ import static io.yope.ethereum.utils.EthereumUtil.removeLineBreaksFromFile;
 @Builder
 @AllArgsConstructor
 @Getter
+@Wither
 public class TitleVisitor extends CareerVisitor {
 
     private Title title;
 
     @Override
     public String getContractKey() {
-        return "TitleContract";
+        return "Title";
     }
 
     @Override
     public String getContractFile() {
-        return "TitleContract.sol";
+        return "Title.sol";
     }
 
     @Override
@@ -37,7 +39,7 @@ public class TitleVisitor extends CareerVisitor {
     }
 
     @Override
-    public Object[] getArgs() {
+    public Object[] getModifyArgs() {
         return new Object[]{title.getName(), title.getDescription(), title.getProfile().getFirstName(), title.getProfile().getLastName()};
     }
 

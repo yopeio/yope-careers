@@ -1,4 +1,4 @@
-contract TitleContract {
+contract Title {
 
     Title title;
 
