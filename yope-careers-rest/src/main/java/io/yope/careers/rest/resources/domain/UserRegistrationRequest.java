@@ -37,6 +37,7 @@ public class UserRegistrationRequest {
                 .username(username)
                 .password(password)
                 .profile(profile.toProfile())
+                .type(type)
                 .build();
     }
 }

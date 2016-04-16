@@ -45,24 +45,25 @@ public class ElasticUserService implements UserService {
                 .password(candidate.getPassword())
                 .username(candidate.getUsername())
                 .status(Status.PENDING)
+                .type(candidate.getType())
                 .build();
-        this.save(elasticCandidate);
+        save(elasticCandidate);
         return candidate;
     }
 
     private User save(final EUser elasticCandidate) {
-        final EUser candidate = this.repository.save(elasticCandidate);
+        final EUser candidate = repository.save(elasticCandidate);
         return candidate.toCandidate();
     }
 
     @Override
     public Page<User> search(final QueryCriteria criteria) {
-        return this.helper.searchUser(criteria);
+        return helper.searchUser(criteria);
     }
 
     @Override
     public User get(final String id) {
-        final EUser currentCandidate = this.repository.findOne(id);
+        final EUser currentCandidate = repository.findOne(id);
         if (currentCandidate == null) {
             return null;
         }
@@ -72,7 +73,7 @@ public class ElasticUserService implements UserService {
 
     @Override
     public User modify(final String id, final User candidate) throws UserNotFoundException {
-        final EUser currentCandidate = this.repository.findOne(id);
+        final EUser currentCandidate = repository.findOne(id);
         if (currentCandidate == null) {
             throw new UserNotFoundException(id);
         }
@@ -81,22 +82,22 @@ public class ElasticUserService implements UserService {
                 .withProfile(candidate.getProfile())
                 .withStatus(candidate.getStatus())
                 .withPassword(candidate.getPassword());
-        return this.save(elasticCandidate);
+        return save(elasticCandidate);
     }
 
     @Override
     public User delete(final String id) throws UserNotFoundException {
-        final EUser currentCandidate = this.repository.findOne(id);
+        final EUser currentCandidate = repository.findOne(id);
         if (currentCandidate == null) {
             throw new UserNotFoundException(id);
         }
         final EUser elasticCandidate = currentCandidate.withStatus(Status.INACTIVE);
-        return this.save(elasticCandidate);
+        return save(elasticCandidate);
     }
 
     @Override
     public Page<Title> getTitles(final String id) throws UserNotFoundException {
-        final User currentCandidate = this.get(id);
+        final User currentCandidate = get(id);
         if (currentCandidate == null) {
             throw new UserNotFoundException(id);
         }
@@ -105,7 +106,7 @@ public class ElasticUserService implements UserService {
 
     @Override
     public Title registerTitle(final String id, final Title title) throws UserNotFoundException {
-        final EUser currentCandidate = this.repository.findOne(id);
+        final EUser currentCandidate = repository.findOne(id);
         if (currentCandidate == null) {
             throw new UserNotFoundException(id);
         }
@@ -126,23 +127,23 @@ public class ElasticUserService implements UserService {
         final EUser elasticCandidate = currentCandidate
                 .withModified(DateTime.now().getMillis())
                 .withTitles(titles);
-        this.save(elasticCandidate);
+        save(elasticCandidate);
         return title;
     }
 
     @Override
     public Title confirmTitleVerification(final String titleId) throws IllegalTitleStatusException, TitleNotFoundException {
-        return this.changeTitleStatus(titleId, Title.Status.VERIFIED);
+        return changeTitleStatus(titleId, Title.Status.VERIFIED);
 
     }
 
     @Override
     public Title revokeTitleVerification(final String titleId) throws IllegalTitleStatusException, TitleNotFoundException {
-        return this.changeTitleStatus(titleId, Title.Status.UNVERIFIED);
+        return changeTitleStatus(titleId, Title.Status.UNVERIFIED);
     }
 
     private Title changeTitleStatus(final String titleId, final Title.Status status) throws IllegalTitleStatusException, TitleNotFoundException {
-        final EUser currentCandidate = this.getUserForTitle(Title.builder().hash(titleId).build());
+        final EUser currentCandidate = getUserForTitle(Title.builder().hash(titleId).build());
         final List<ETitle> titles = currentCandidate.getTitles();
         final ETitle currentTitle = titles.stream().filter(x -> x.getHash().equals(titleId)).findFirst().orElse(null);
         if (currentTitle.getStatus().equals(status)) {
@@ -154,37 +155,37 @@ public class ElasticUserService implements UserService {
         final EUser elasticCandidate = currentCandidate
                 .withModified(DateTime.now().getMillis())
                 .withTitles(titles);
-        this.save(elasticCandidate);
+        save(elasticCandidate);
         return modifiedTitle.toTitle();
     }
 
     @Override
     public Title unregisterTitle(final String titleId) throws TitleNotFoundException {
-        final EUser currentCandidate = this.getUserForTitle(Title.builder().hash(titleId).build());
+        final EUser currentCandidate = getUserForTitle(Title.builder().hash(titleId).build());
         final List<ETitle> titles = currentCandidate.getTitles();
         final ETitle title = titles.stream().filter(x -> x.getHash().equals(titleId)).findFirst().orElse(null);
         titles.remove(title);
         final EUser elasticCandidate = currentCandidate
                 .withModified(DateTime.now().getMillis())
                 .withTitles(titles);
-        this.save(elasticCandidate);
+        save(elasticCandidate);
         return title.toTitle();
     }
 
     private EUser getUserForTitle(final Title title) throws TitleNotFoundException {
         final User searchCandidate = User.builder().titles(Lists.newArrayList(title)).build();
-        final Page<User> users = this.search(QueryCriteria.builder().candidate(searchCandidate).page(0).size(1).build());
+        final Page<User> users = search(QueryCriteria.builder().candidate(searchCandidate).page(0).size(1).build());
         final User candidate = users.getElements().stream().findFirst().orElse(null);
         if (candidate == null) {
             throw new TitleNotFoundException(MessageFormat.format("No results for query on '{0}'", title));
         }
-        return this.repository.findOne(candidate.getHash());
+        return repository.findOne(candidate.getHash());
     }
 
     @Override
     public Title getTitle(final String titleId) throws TitleNotFoundException {
         final User candidate = User.builder().titles(Lists.newArrayList(Title.builder().hash(titleId).build())).build();
-        final Page<User> users = this.search(QueryCriteria.builder().candidate(candidate).page(0).size(1).build());
+        final Page<User> users = search(QueryCriteria.builder().candidate(candidate).page(0).size(1).build());
         final User currentCandidate = users.getElements().stream().findFirst().orElse(null);
         if (currentCandidate == null) {
             throw new TitleNotFoundException(MessageFormat.format("No results for query on '{0}'", titleId));
@@ -195,7 +196,7 @@ public class ElasticUserService implements UserService {
 
     @Override
     public User getByUsername(final String username) {
-        final EUser currentCandidate = this.repository.findByUsername(username);
+        final EUser currentCandidate = repository.findByUsername(username);
         if (currentCandidate == null) {
             return null;
         }

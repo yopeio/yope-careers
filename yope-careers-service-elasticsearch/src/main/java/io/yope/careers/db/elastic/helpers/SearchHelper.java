@@ -48,8 +48,8 @@ public class SearchHelper {
     private ElasticsearchTemplate template;
 
     public Page<User> searchUser(final QueryCriteria criteria){
-        final SearchQuery searchQuery = this.getSearchQuery(criteria);
-        final FacetedPage<EUser> result = this.template.queryForPage(searchQuery, EUser.class);
+        final SearchQuery searchQuery = getSearchQuery(criteria);
+        final FacetedPage<EUser> result = template.queryForPage(searchQuery, EUser.class);
 
         return new Page<User>(result.getContent().stream()
                 .map(x -> x.toCandidate()).collect(Collectors.toList()),
@@ -58,7 +58,7 @@ public class SearchHelper {
     }
 
     private SearchQuery getSearchQuery(final QueryCriteria criteria) {
-        final QueryBuilder filteredQuery = this.getUserQuery(criteria.getCandidate());
+        final QueryBuilder filteredQuery = getUserQuery(criteria.getCandidate());
         return new NativeSearchQueryBuilder()
                 .withQuery(filteredQuery)
                 .withPageable(new PageRequest(criteria.getPage(), criteria.getSize()))
@@ -78,11 +78,11 @@ public class SearchHelper {
                     filter);
         } if (user.getProfile() != null) {
             return QueryBuilders.filteredQuery(
-                    this.getProfileQuery(user.getProfile(), "profile"),
+                    getProfileQuery(user.getProfile(), "profile"),
                     filter);
         } if (CollectionUtils.isNotEmpty(user.getTitles())) {
             return QueryBuilders.filteredQuery(
-                    this.getTitleQuery(user.getTitles().get(0)),
+                    getTitleQuery(user.getTitles().get(0)),
                     filter);
         }
         return QueryBuilders.filteredQuery(QueryBuilders.matchAllQuery(), filter);
@@ -125,7 +125,7 @@ public class SearchHelper {
             return QueryBuilders.nestedQuery("titles", queryBuilder);
         } else if (title.getProfile() != null) {
             final Profile profile = title.getProfile();
-            return this.getProfileQuery(profile, "titles.profile");
+            return getProfileQuery(profile, "titles.profile");
         }
         if (title.getStatus() != null) {
             queryBuilder.must(QueryBuilders.termQuery("titles.status", title.getStatus().name().toLowerCase()));
@@ -150,7 +150,7 @@ public class SearchHelper {
         }
         if (profile.getRole() != null) {
             final String[] values = StringUtils.split(profile.getRole().toLowerCase());
-            queryBuilder.must(QueryBuilders.termsQuery(path+".description", values));
+            queryBuilder.must(QueryBuilders.termsQuery(path+".role", values));
         }
         if (profile.getDescription() != null) {
             final String[] values = StringUtils.split(profile.getDescription().toLowerCase());

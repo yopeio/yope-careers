@@ -3,6 +3,7 @@
  */
 package io.yope.careers.db.domain;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,7 @@ import io.yope.careers.domain.User.Status;
 import io.yope.careers.domain.User.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Wither;
@@ -30,8 +32,14 @@ import lombok.experimental.Wither;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@EqualsAndHashCode
 @Document(indexName = "user", type = "user", shards = 1, replicas = 0, refreshInterval = "-1")
-public class EUser {
+public class EUser implements Serializable {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6099494471999501851L;
 
     @Id
     private String hash;
@@ -56,15 +64,15 @@ public class EUser {
 
     public User toCandidate() {
         return User.builder()
-                .hash(this.hash)
-                .username(this.username)
-                .created(this.created)
-                .modified(this.modified)
-                .profile(this.profile)
-                .password(this.password)
-                .status(this.status)
-                .type(this.type)
-                .titles(this.titles == null? null : this.getTitles().stream().map(x -> x.toTitle()).collect(Collectors.toList()))
+                .hash(hash)
+                .username(username)
+                .created(created)
+                .modified(modified)
+                .profile(profile)
+                .password(password)
+                .status(status)
+                .type(type)
+                .titles(titles == null? null : getTitles().stream().map(x -> x.toTitle()).collect(Collectors.toList()))
                 .build();
     }
 
