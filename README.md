@@ -14,6 +14,9 @@ Decentralised, blockchain-based careers networking API
 - [Sequence Diagrams](https://github.com/yopeio/yope-careers/wiki/Sequence%20Diagrams)
 - [Class Diagrams](https://github.com/yopeio/yope-careers/wiki/Class%20Diagrams)
 
+### Public API
+[User, Title, Verification API reference](https://github.com/yopeio/yope-careers/wiki/Public%20API)
+
 
 ### Prerequisities
 - java 8
@@ -30,9 +33,6 @@ in `yope-careers-rest\application.yml`
 `cd yope-careers-rest`
 
 `mvn spring-boot:run`
-
-### RESTful APIs
-https://github.com/yopeio/yope-careers/wiki/Public%20API
 
 ### How to test it
 
