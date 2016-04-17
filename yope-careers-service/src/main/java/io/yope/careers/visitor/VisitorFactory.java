@@ -1,7 +1,6 @@
 package io.yope.careers.visitor;
 
 import io.yope.careers.domain.User;
-import io.yope.ethereum.model.Method;
 
 public class VisitorFactory {
 
