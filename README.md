@@ -1,6 +1,18 @@
 # Careers Networking API
-Java client of JSON RPC Ethereum API, based on  reference.  
+Decentralised, blockchain-based careers networking API
 
+## Main features:
+* Persistence into the blockchain of candidates profiles, education, skills and job experiences.
+* Fast search by non-sensitive data, powered by an embedded centralised search engine.
+* Retrieval of full candidate’s information, given its address, from the contract stored into the blockchain.
+* Pay-for-a-service and advertising-free search. HR and recruiters pay for reading candidates information, thanks to a bitcoin micropayment internal mechanism.
+* Role-based data visualisation. Candidates can choose which information are visible to specific network users roles.
+* Access-token-based authorization layer.
+
+### UML Diagrams
+
+- [Sequence Diagrams](https://github.com/yopeio/yope-careers/wiki/Sequence%20Diagrams)
+- [Class Diagrams](https://github.com/yopeio/yope-careers/wiki/Class%20Diagrams)
 
 
 ### Prerequisities
@@ -11,8 +23,8 @@ Java client of JSON RPC Ethereum API, based on  reference.
 ### Configuration
 in `yope-careers-rest\application.yml`
 
-* `org.ethereum.address: http:/...`
-* `org.ethereum.accountAddress: ...`
+* Address of the  JSON RPC Ethereum Java client: `org.ethereum.address: http:/...`
+* Ethereum account address: `org.ethereum.accountAddress: ...`
 
 ### How to build and run it
 `cd yope-careers-rest`
