@@ -23,6 +23,9 @@ Decentralised, blockchain-based careers networking API
 - maven 3.x
 - a local/remote ethereum blockchain based on  https://github.com/ethereum/wiki/wiki/JSON-RPC reference.
 
+### Dependencies
+- [Yope Ethereum API](https://github.com/yopeio/ethereum-api)
+
 ### Configuration
 in `yope-careers-rest\application.yml`
 
@@ -30,9 +33,9 @@ in `yope-careers-rest\application.yml`
 * Ethereum account address: `org.ethereum.accountAddress: ...`
 
 ### How to build and run it
-`cd yope-careers-rest`
-
-`mvn spring-boot:run`
+- Build locally [Yope Ethereum API](https://github.com/yopeio/ethereum-api)
+- `cd yope-careers-rest`
+- `mvn spring-boot:run`
 
 ### How to test it
 
