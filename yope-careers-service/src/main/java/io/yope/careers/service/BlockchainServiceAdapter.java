@@ -36,7 +36,7 @@ public class BlockchainServiceAdapter implements BlockchainService {
     public String register(final BlockchainVisitor visitor) {
         try {
             visitor.setAccountAddress(accountAddress);
-            Map<String, Receipt> contracts = blockchainFacade.createContracts(visitor);
+            Map<Receipt.Type, Receipt> contracts = blockchainFacade.createContracts(visitor);
             return contracts.values().iterator().next().getContractAddress();
         } catch (ExceededGasException e) {
             log.info("gas exceed error", e);

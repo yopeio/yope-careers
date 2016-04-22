@@ -27,7 +27,7 @@ public class AuthorityTest extends BaseTest {
         User user = User.builder().type(User.Type.AUTHORITY).profile(profile).build();
         CareerVisitor visitor = getVisitor(user);
 
-        Map<String, Receipt> authority = blockchainFacade.createContracts(
+        Map<Receipt.Type, Receipt> authority = blockchainFacade.createContracts(
                 visitor
         );
         String contractAddress = authority.values().iterator().next().getContractAddress();
