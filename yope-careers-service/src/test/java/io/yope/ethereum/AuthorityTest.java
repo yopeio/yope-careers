@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,32 +22,41 @@ import static org.junit.Assert.assertNotNull;
 @Slf4j
 public class AuthorityTest extends BaseTest {
 
+    private static final long TIMEOUT = 10;
+
     @Test
-    public void testCreateAndRunAuthority() throws ExceededGasException, NoSuchContractMethod {
+    public void testCreateAndRunAuthority() throws ExceededGasException, NoSuchContractMethod, ExecutionException, InterruptedException {
 
         Profile profile = Profile.builder().firstName("Tel Aviv University").build();
         User user = User.builder().type(User.Type.AUTHORITY).profile(profile).build();
         CareerVisitor visitor = getVisitor(user);
 
-        Map<Receipt.Type, Receipt> authority = blockchainFacade.createContracts(
+        Map<Receipt.Type, Future<Receipt>> authority = blockchainFacade.createContracts(
                 visitor
         );
-        String contractAddress = authority.values().iterator().next().getContractAddress();
+
+        for (Future<Receipt> r : authority.values()) {
+            isDone(r);
+        }
+
+        String contractAddress = authority.values().iterator().next().get().getContractAddress();
 
         log.info("addr: {}", contractAddress);
         assertNotNull(contractAddress);
 
         String primaryAuthorityName = blockchainFacade.<String>runContract(contractAddress, visitor);
 
-        assertEquals(primaryAuthorityName, "Tel Aviv University");
+        assertEquals("Tel Aviv University", primaryAuthorityName);
 
         User newUser = user.withProfile(profile.withFirstName("New Tel Aviv University"));
 
         CareerVisitor newVisitor = getVisitor(newUser);
 
-        Receipt receipt = blockchainFacade.modifyContract(contractAddress,
+        Future<Receipt> receipt = blockchainFacade.modifyContract(contractAddress,
                 newVisitor
         );
+
+        isDone(receipt);
 
         log.info("receipt: {}", receipt);
         assertNotNull(contractAddress);
@@ -53,7 +64,7 @@ public class AuthorityTest extends BaseTest {
         String authorityName = blockchainFacade.<String>runContract(contractAddress, visitor);
 
         log.info("authorityName: {}", authorityName);
-        assertEquals(authorityName, "New Tel Aviv University");
+        assertEquals("New Tel Aviv University", authorityName);
 
         newVisitor.addMethod(Method.builder().type(Method.Type.MODIFY).name("validate")
                 .args(new Object[]{"UTA"}).build());
@@ -61,10 +72,20 @@ public class AuthorityTest extends BaseTest {
         receipt = blockchainFacade.modifyContract(contractAddress,
                 newVisitor
         );
+        isDone(receipt);
         log.info("receipt: {}", receipt);
         authorityName = blockchainFacade.<String>runContract(contractAddress, visitor);
         log.info("authorityName: {}", authorityName);
         assertEquals(authorityName, "UTA");
+    }
+
+    private static void isDone(Future<Receipt> receipt) {
+        while (!receipt.isDone()) {
+            try {
+                Thread.sleep(TIMEOUT);
+            } catch (InterruptedException e) {
+            }
+        }
     }
 
     private CareerVisitor getVisitor(User user) {
