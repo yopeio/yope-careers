@@ -27,3 +27,6 @@ mods/
 .idea/
 .DS_Store
 local.*
+
+# Elasticsearch
+yope-careers-rest/data/**/* 
