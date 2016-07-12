@@ -1,6 +1,12 @@
 contract Title {
-
+    /*
+    * owner of the title.
+    */
     address owner;
+
+    /*
+    * account addresses of candidate and authority.
+    */
     address[2] userIds;
 
     /*
@@ -22,18 +28,24 @@ contract Title {
     /*
     * verifies if a title is authenticated by both signature.
     */
-    function isAuthenticated() constant returns (bool retVal) {
+    function isVerified() constant returns (bool retVal) {
         if (userIds.length == 2) {
             return true;
         }
-        return false;
+        throw;
     }
 }
 
 contract User {
 
+    /*
+    * user profile.
+    */
     Profile profile;
 
+    /*
+    * account address.
+    */
     address username;
 
     string userType = "{0}";
@@ -44,20 +56,23 @@ contract User {
     address[] titles;
 
     /*
-    * the constructor set username and profile.
+    * User constructor set username and profile.
     */
     function User() {
         username = msg.sender;
         profile = Profile(firstName, lastName);
     }
 
+    /*
+    * minimal profile information.
+    */
     struct Profile {
         string firstName;
         string lastName;
     }
 
     /*
-    * updates profile data.
+    * updates profile data checking the passprhase.
     */
     function updateProfile(string firstName, string lastName, string pwd) {
         if (authenticate(pwd)) {
@@ -68,9 +83,9 @@ contract User {
     /*
     * updates profile data.
     */
-    function updatePassword(string pwd) {
-        if (authenticate(pwd)) {
-            password = pwd;
+    function updatePassword(string oldPwd, string newPwd) {
+        if (authenticate(oldPwd)) {
+            password = newPwd;
         }
     }
 
@@ -90,25 +105,24 @@ contract User {
         if (msg.sender == username && stringsEqual(pwd, password)) {
             return true;
         }
-        return false;
+        throw;
     }
 
     /*
     * check if two strings are equals.
     */
-    function stringsEqual(string memory _a, string storage _b) internal returns (bool) {
-		bytes memory a = bytes(_a);
-		bytes storage b = bytes(_b);
-		if (a.length != b.length)
-			return false;
-		// @todo unroll this loop
-		for (uint i = 0; i < a.length; i ++) {
-			if (a[i] != b[i]) {
-				return false;
-			}
-		}
-		return true;
-	}
+    function stringsEqual(string _a, string _b) constant returns (bool) {
+        bytes memory a = bytes(_a);
+        bytes memory b = bytes(_b);
+        if (a.length != b.length)
+            return false;
+        for (uint i = 0; i < a.length; i ++) {
+            if (a[i] != b[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 }

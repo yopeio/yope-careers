@@ -84,7 +84,7 @@
             </dependency>
             <dependency>
                 <groupId>io.yope</groupId>
-                <artifactId>yope-ethereum-services</artifactId>
+                <artifactId>ethereum-api</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
